@@ -4,6 +4,33 @@
     padding: 0;
   }
   
+  
+  /* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #000; /* Track background */
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #0066ff; /* Thumb color */
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0066ff, 0 0 15px #0066ff; /* Glowing effect */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0088ff; /* Brighter blue on hover */
+    box-shadow: 0 0 15px #0088ff, 0 0 25px #0088ff; /* Stronger glow on hover */
+  }
+  
+  body {
+    scrollbar-color: #0066ff #000; /* For Firefox: Thumb (blue), Track (black) */
+    scrollbar-width: thin; /* For Firefox: Thin scrollbar */
+  }
+  
   body {
     background-color: #000;
     color: #fff;

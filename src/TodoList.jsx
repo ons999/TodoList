@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './todolist.css'
+import './ScrollToTop.css'
 export default function TodoList() {
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: true },
@@ -9,6 +10,7 @@ export default function TodoList() {
     { id: 3, text: "Style with CSS", completed: false }
   ])
   const [newTodo, setNewTodo] = useState("")
+  const [showScrollButton, setShowScrollButton] = useState(false)
 
   const addTodo = (e) => {
     e.preventDefault()
@@ -27,11 +29,35 @@ export default function TodoList() {
     setTodos(todos.filter(todo => todo.id !== id))
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  useEffect(() => {
+    // Check the scroll position on scroll event to show/hide the button
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setShowScrollButton(true)
+      } else {
+        setShowScrollButton(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
     <div className="todo-container">
       <h1>Todo List</h1>
       <form onSubmit={addTodo} className="todo-form">
-       
         <input
           type="text"
           value={newTodo}
@@ -43,7 +69,6 @@ export default function TodoList() {
           <span className="plus-icon">+</span>
           Add
         </button>
-       
       </form>
       <ul className="todo-list">
         {todos.map(todo => (
@@ -65,6 +90,13 @@ export default function TodoList() {
           </li>
         ))}
       </ul>
+
+      {/* Scroll to top button */}
+      {showScrollButton && (
+        <button className="scroll-to-top" onClick={scrollToTop}>
+          ↑ Top
+        </button>
+      )}
     </div>
   )
 }
